@@ -1,202 +1,72 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #f8fafc;
+  --color-background: #f1f5f9;
   --color-foreground: #0f172a;
   --color-primary: #4f46e5;
-  --color-primary-light: #818cf8;
   --color-secondary: #0ea5e9;
-  --color-accent: #f59e0b;
   --color-coral: #f43f5e;
   --color-emerald: #10b981;
-  --color-card: #ffffff;
-  --color-muted: #94a3b8;
-  --color-border: #e2e8f0;
   --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 400; font-style: normal; font-display: swap;
 }
-
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 500; font-style: normal; font-display: swap;
 }
-
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 600; font-style: normal; font-display: swap;
 }
-
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 700; font-style: normal; font-display: swap;
 }
-
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff') format('woff');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 800; font-style: normal; font-display: swap;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans);
   background: var(--color-background);
   color: var(--color-foreground);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Recharts tooltip custom styling */
 .recharts-default-tooltip {
   border-radius: 12px !important;
-  border: 1px solid var(--color-border) !important;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06) !important;
   font-family: var(--font-sans) !important;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+@keyframes progressFill { from { width: 0; } }
+.progress-animated { animation: progressFill 1s cubic-bezier(0.4,0,0.2,1) forwards; }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Gradient text utility */
-.gradient-text {
-  background: linear-gradient(135deg, #4f46e5, #0ea5e9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Animated gradient background */
-.hero-gradient {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-}
-
-/* Stat card hover */
-.stat-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.12);
-}
-
-/* Section fade-in */
-.section-enter {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.section-enter.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Nav link */
-.nav-link {
-  position: relative;
-  transition: color 0.2s;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #4f46e5, #0ea5e9);
-  transition: width 0.3s;
-  border-radius: 1px;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
-
-/* Quote card */
-.quote-card {
-  position: relative;
-  padding-left: 1.25rem;
-  border-left: 3px solid;
-  border-image: linear-gradient(to bottom, #4f46e5, #0ea5e9) 1;
-}
-
-/* Progress bar animation */
-@keyframes progressFill {
-  from { width: 0; }
-}
-
-.progress-animated {
-  animation: progressFill 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Counter animation */
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.tab-enter { animation: fadeUp 0.3s ease-out; }
 
-.count-animate {
-  animation: countUp 0.6s ease-out forwards;
-}
-
-/* Insight card gradient borders */
-.insight-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.insight-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #4f46e5, #0ea5e9, #10b981);
+.quote-border {
+  border-left: 3px solid;
+  border-image: linear-gradient(to bottom, #4f46e5, #0ea5e9) 1;
 }
