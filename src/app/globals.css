@@ -1,15 +1,33 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #f1f5f9;
-  --color-foreground: #0f172a;
-  --color-primary: #4f46e5;
-  --color-secondary: #0ea5e9;
-  --color-coral: #f43f5e;
-  --color-emerald: #10b981;
-  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --color-bg: #0C0C0F;
+  --color-surface: #16161A;
+  --color-surface-raised: #1E1E24;
+  --color-border: #2A2A32;
+  --color-border-subtle: #222228;
+  --color-text: #EAEAEF;
+  --color-text-secondary: #8B8B9E;
+  --color-text-muted: #5C5C6F;
+  --color-accent: #6C63FF;
+  --color-accent-warm: #FF6B4A;
+  --color-accent-teal: #2DD4A8;
+  --color-accent-gold: #F5C542;
+  --color-accent-rose: #FF4F81;
+  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: 'Noto Serif KR', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+}
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -41,32 +59,104 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: var(--color-bg);
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.7;
 }
 
-.recharts-default-tooltip {
-  border-radius: 12px !important;
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06) !important;
-  font-family: var(--font-sans) !important;
-}
-
-::-webkit-scrollbar { width: 5px; }
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
 
-@keyframes progressFill { from { width: 0; } }
-.progress-animated { animation: progressFill 1s cubic-bezier(0.4,0,0.2,1) forwards; }
+/* ─── Recharts overrides ─── */
+.recharts-default-tooltip {
+  background: var(--color-surface-raised) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4) !important;
+  font-family: var(--font-sans) !important;
+  color: var(--color-text) !important;
+}
+.recharts-tooltip-item { color: var(--color-text-secondary) !important; }
 
+/* ─── Animations ─── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.tab-enter { animation: fadeUp 0.3s ease-out; }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideRight {
+  from { width: 0; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
 
-.quote-border {
-  border-left: 3px solid;
-  border-image: linear-gradient(to bottom, #4f46e5, #0ea5e9) 1;
+.animate-fade-up {
+  animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+  opacity: 0;
+}
+.bar-fill {
+  animation: slideRight 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.pulse-dot {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* ─── Tab panel ─── */
+.tab-panel {
+  animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─── Noise texture overlay ─── */
+.noise-bg::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+/* ─── Gradient mesh for hero ─── */
+.hero-mesh {
+  background:
+    radial-gradient(ellipse 50% 60% at 20% 50%, rgba(108, 99, 255, 0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 50% at 80% 30%, rgba(255, 107, 74, 0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 40% at 50% 90%, rgba(45, 212, 168, 0.04) 0%, transparent 100%),
+    var(--color-bg);
+}
+
+/* ─── Quote styling ─── */
+.quote-accent {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.quote-accent::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-teal));
+  border-radius: 1px;
 }
